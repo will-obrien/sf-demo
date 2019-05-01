@@ -11,6 +11,12 @@ public class NewClass2 {
     public void emptyMethodAgain(){
         
     }
+
+    public void terribleMethod(Integer param){
+        param = param;
+        param = 4;
+        
+    }
  
 
 }
