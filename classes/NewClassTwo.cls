@@ -7,8 +7,15 @@ public class NewClass2 {
     private void unusedPrivate2(String param){
         param = 'Reassign';
     }
+    /*
+    * blah
+    */
+    public void emptyMethodAgain() {
+        //Needs to be completed on separate branch
+    }
 
-    public void emptyMethodAgain(){
+    public void terribleMethod(Integer param) {
+        param = 4;
         
     }
  
