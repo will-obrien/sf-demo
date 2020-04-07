@@ -1,0 +1,5 @@
+INSTALL Instructions
+
+Please read https://www.codescan.io/onprem/install/installing-all/
+
+

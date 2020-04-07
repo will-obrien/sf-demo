@@ -1,0 +1,45 @@
+Using codescan with bamboo.
+---------------------------
+These instructions could be modified to use with other CI systems.
+
+
+1) Ensure ant is installed. We use this to run the codescan job
+
+2) Modify antbuild.xml. Put the following values at the top, and remove the corresponding settings further down.
+  <!-- first pick up from working dir, which is used when doing an ant build -->
+  <property file="${user.dir}/sonar-project.properties"/>
+
+  <!-- pick up from environment, in case of bamboo, etc -->
+  <property environment="env"/>
+  <property name="sonar.projectKey" value="${env.SONAR_PROJECTKEY}"/>
+  <property name="sonar.projectVersion" value="${env.SONAR_PROJECTVERSION}"/>
+  <property name="sonar.projectName" value="${env.SONAR_PROJECTNAME}"/>
+  <property name="salesforce.username" value="${env.SALESFORCE_USERNAME}"/>
+  <property name="salesforce.password" value="${env.SALESFORCE_PASSWORD}"/>
+  <property name="salesforce.url" value="${env.SALESFORCE_URL}"/>
+
+3) Optionally test that you can run the ant script by using something like this:
+  export bamboo_SALESFORCE_PASSWORD="mypasswordandtoken"
+  export bamboo_SALESFORCE_URL="https://test.salesforce.com"
+  export bamboo_SALESFORCE_USERNAME="my@username.com"
+  export bamboo_SONAR_PROJECTKEY="myprojectkey"
+  export bamboo_SONAR_PROJECTNAME="My Project Name :: sandboxname"
+  export bamboo_SONAR_PROJECTVERSION="1.0-SNAPSHOT"
+
+4) Create a Build Stage and create an ant task to download the code (target should be download)
+
+5) Create another task to run sonar (target should be sonar)
+
+6) Go to the Plan Configuration > Variables and create the necessary configuration:
+   - SALESFORCE_PASSWORD - salesforce password and token
+   - SALESFORCE_URL - http://test.salesforce.com or http://login.salesforce.com
+   - SALESFORCE_USERNAME - your username
+   - SONAR_PROJECTKEY - the unique key for this project.
+   - SONAR_PROJECTNAME - the display name for this project
+   - SONAR_PROJECTVERSION - the version for this project.
+
+7) It's also possible to use the sonar ant task's environment variables instead of the Plan Configuration variables.
+   That way you can use any of Bamboo's internal variables (like use the bamboo build key instead)
+   - for example: bamboo_SONAR_PROJECTKEY="${bamboo.buildKey}"
+   - and/or bamboo_SONAR_PROJECTNAME="${bamboo.buildPlanName}"
+
